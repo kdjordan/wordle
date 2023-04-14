@@ -2,7 +2,9 @@ export default function Banner( {active, win, answer, numGuesses} ) {
     console.log('active is ', active)
     const STYLE = {
         backgroundColor : `${win ? 'green' : 'red'}`,
-        height: '9rem'
+        height: '9rem',
+        borderTopRightRadius: '.5rem',
+        borderTopLeftRadius: '.5rem',
     }
     return (
         active && <div className="banner" style={STYLE}>
