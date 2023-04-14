@@ -1,11 +1,14 @@
-import { checkGuess } from "../../game-helpers";
 import { GuessResultRow } from "../Guess/Guess";
 import { range } from "../../utils";
+
+
+import { checkGuess } from "../../game-helpers";
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants.js'
 
 export default function GuessList( { guesses, answer} ) {
 
   let board = []
+  let checkedGuesses = []
 
   function addGuessesToBoard(guessesArr) {
     guessesArr.forEach((guess, i) => {
@@ -16,7 +19,6 @@ export default function GuessList( { guesses, answer} ) {
 
  
   function checkGuesses() {
-    let checkedGuesses = []
     guesses.map((g) => {
       //check for win
       let answerResponse = checkGuess(g, answer)
@@ -26,17 +28,21 @@ export default function GuessList( { guesses, answer} ) {
       }
 
     })
-
-    function checkWin(answerArr) {
-      let winOrNot = answerArr.filter(obj => {
-        console.log('***', obj)
-        return obj.status != 'correct'
-    })
-    // winOrNot.length === 0 ? setWin(true) : setWin(false) 
-    }
-  
-    addGuessesToBoard(checkedGuesses)
   }
+
+
+  function checkWin(answerArr) {
+    let winOrNot = answerArr.filter(obj => {
+      console.log('***', obj)
+      return obj.status != 'correct'
+  })
+  // winOrNot.length === 0 ? setWin(true) : setWin(false) 
+  }
+  
+
+  //just guesses homie
+  addGuessesToBoard(checkedGuesses)
+  
   
   function buildBoard() {
       for (let i = 0 ; i < NUM_OF_GUESSES_ALLOWED ; i++) {
