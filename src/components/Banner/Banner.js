@@ -1,7 +1,11 @@
 export default function Banner( {active, win, answer, numGuesses} ) {
-    
+    console.log('active is ', active)
+    const STYLE = {
+        backgroundColor : `${win ? 'green' : 'red'}`,
+        height: '9rem'
+    }
     return (
-        active && <div className="banner" style={{backgroundColor: 'red', height: '9rem'}}>
+        active && <div className="banner" style={STYLE}>
             {win ? (
                 <h2 style={{color:'white'}}>Congratulations! You got it in {numGuesses} guesses.</h2>
             ) 
