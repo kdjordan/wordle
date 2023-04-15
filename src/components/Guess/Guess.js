@@ -1,5 +1,4 @@
 export function GuessResultRow({ guess }) {
-    // console.log('received ', guess)
     return (
         <p className="guess">
             {guess.map(({letter, status}) => {

@@ -1,4 +1,3 @@
-import { checkGuess } from "../../game-helpers";
 import { GuessResultRow } from "../Guess/Guess";
 import { range } from "../../utils";
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants.js'
@@ -9,8 +8,6 @@ export default function GuessList( { guesses } ) {
 
   function addGuessesToBoard(guesses) {
     guesses.forEach((guess, i) => {
-      //add guess to board
-      // console.log('adding guesss ', guess)
       board[i] = guess
     });
   }
