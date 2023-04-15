@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function GuessInput( { handleGuess } ) {
+export default function GuessInput( { handleGuess, inputActive } ) {
     const [guess, setGuess] = useState('')
 
     return (
@@ -21,6 +21,7 @@ export default function GuessInput( { handleGuess } ) {
                 id="guess-input" 
                 type="text" 
                 value={guess}
+                disabled={inputActive}
                 onChange={(e) => setGuess(e.target.value)}
             /> 
         </form>

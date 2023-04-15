@@ -2,61 +2,79 @@ import React, {useState} from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
-import { NUM_OF_GUESSES_ALLOWED } from '../../constants.js'
 import GuessInput from '../GuessInput/GuessInput';
 import GuessList from '../GuessList/GuessList';
 import Banner from '../Banner/Banner';
 import { checkGuess } from "../../game-helpers";
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants.js';
 
 // Pick a random word on every pageload.
-const answer = sample(WORDS);
-console.log(answer)
-
+let answer = sample(WORDS);
 
 // To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
+// console.info({ answer });
 
 function Game() {
+  //set up state
   const [guesses, setGuesses] = useState([])
-  const [gameWon, setGameWon] = useState(false)
+  const [win, setWin] = useState(false)
+  const [bannerActive, setBannerActive] = useState(false)
 
-  // need to pass down array to GuessLIst - 
-
-  function checkWin(answerArr) {
-  //   let winOrNot = answerArr.filter(obj => {
-  //     console.log('***', obj)
-  //     return obj.status != 'correct'
-  // })
-  // winOrNot.length === 0 ? setWin(true) : setWin(false) 
+  //will reset all State to intial 
+  function resetGame() {
+    setGuesses([])
+    setWin(false)
+    setBannerActive(false)
+    //get a new answer
+    answer = sample(WORDS);
   }
 
-  function checkGuesses() {
-    // let checkedGuesses = []
-    // guesses.map((g) => {
-    //   //check for win
-    //   let answerResponse = checkGuess(g, answer)
-    //   checkedGuesses.push(answerResponse)
-    //   if (checkWin(answerResponse)) {
-    //     //signal win to APP
-    //   }
-
-    // })
+  //will fire banner up and disable input if guess is correct or user has exhausted guesses
+  function endGame(status) {
+    if (status === 'win') {
+      setBannerActive(true)
+      setWin(true)
+    } else {
+      setBannerActive(true)
+    }
   }
 
+  //checks to see if all status object for each letter are correct or not
+  //if isWin is empty then all letters match 'correct' = thus a win
+  function checkGuessForMatch(guess) {
+    let isWin = guess.filter((obj) => obj.status !== 'correct')
+    return (isWin.length === 0 ?  true : false)
+  }
  
   function handleGuess(guess) {
-    const newGuesses = [...guesses, guess]
     //check to see if guess is matched 
-    //check to see if guesses.length = NUM_OF_GUESSES_ALLOWED
-    setGuesses(newGuesses)
+    let guessResult = checkGuess(guess, answer)
+    //add to guesses State for rendering 
+    setGuesses([...guesses, guessResult])
+    //check to see if guess is a match - if so end game
+    if (checkGuessForMatch(guessResult)) {
+      endGame('win')
+    }
+    //check to see if user is out of guesses - and is a loss
+    if (guesses.length + 1 === NUM_OF_GUESSES_ALLOWED) {
+      endGame('loss')
+    }
   }
-
 
   return (
     <>
       <GuessList guesses={guesses} answer={answer}/>
-      <GuessInput handleGuess={handleGuess} gameWon={false}/>
-      <Banner gameWon={false} win={true} answer={answer} numGuesses={guesses.length}/>
+      <GuessInput 
+        handleGuess={handleGuess} 
+        inputActive={bannerActive} 
+      />
+      <Banner 
+        bannerActive={bannerActive} 
+        win={win} 
+        answer={answer} 
+        numGuesses={guesses.length}
+        resetGame={resetGame}
+      />
     </>
   );
 }
