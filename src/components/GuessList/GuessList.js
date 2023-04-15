@@ -14,30 +14,6 @@ export default function GuessList( { guesses } ) {
       board[i] = guess
     });
   }
-
- 
-  // function checkGuesses() {
-  //   let checkedGuesses = []
-  //   guesses.map((g) => {
-  //     //check for win
-  //     let answerResponse = checkGuess(g, answer)
-  //     checkedGuesses.push(answerResponse)
-  //     if (checkWin(answerResponse)) {
-  //       //signal win to APP
-  //     }
-
-  //   })
-
-  //   function checkWin(answerArr) {
-  //     let winOrNot = answerArr.filter(obj => {
-  //       console.log('***', obj)
-  //       return obj.status != 'correct'
-  //   })
-  //   // winOrNot.length === 0 ? setWin(true) : setWin(false) 
-  //   }
-  
-  //   addGuessesToBoard(checkedGuesses)
-  // }
   
   function buildBoard() {
       for (let i = 0 ; i < NUM_OF_GUESSES_ALLOWED ; i++) {
